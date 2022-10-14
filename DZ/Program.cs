@@ -1,47 +1,63 @@
-﻿string[] CreateStringArray(int size)
+﻿void ShowArray(string[] arr)
 {
-    string[] newArray = new string[size];
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < arr.Length; i++)
     {
-        Console.Write("Input " + i + " element of array: ");
-        newArray[i] = Console.ReadLine();
+        Console.Write(arr[i] + " ");
     }
-    return newArray;
 }
 
-void ShowArray(string[] array)
+string[] CreateArray(int size)
 {
-    for (int i = 0; i < array.Length; i++)
-        Console.Write(array[i] + " ");
+    string[] arr = new string[size];
 
-    Console.WriteLine();
+    for (int i = 0; i < arr.Length; i++)
+    {
+        Console.WriteLine($"Input the {i + 1} element of the array: ");
+        arr[i] = Console.ReadLine();
+    }
+
+    return arr;
 }
 
-string[] CreateNewArrayFromElements(string[] array)
+int NumberOfValues(string[] arr)
 {
-    int size = 0;
-    for (int i = 0; i < array.Length; i++)
-    {
-        if (array[i].Length <= 3) size++;
-    }
-    if (size == 0) Console.WriteLine("There are no strings in the array whose length is less or equal 3 characters");
+    int m = 0;
 
-    string[] newArray = new string[size];
-    int j = 0;
-    for (int i = 0; i < array.Length; i++)
+    for (int i = 0; i < arr.Length; i++)
     {
-        if (array[i].Length <= 3)
+        if (arr[i].Length <= 3) m++;
+    }
+
+    return m;
+}
+
+string[] MinimumThreeCharacters(string[] arr, int m)
+{
+    string[] newArray = new string[m];
+
+    for (int i = 0, j = 0; i < arr.Length && j < newArray.Length; i++)
+    {
+        if (arr[i].Length <= 3)
         {
-            newArray[j] = array[i];
+            newArray[j] = arr[i];
             j++;
         }
     }
+
     return newArray;
 }
 
-Console.Write("Input size for array: ");
-int a = Convert.ToInt32(Console.ReadLine());
-string[] myArray = CreateStringArray(a);
+Console.WriteLine("Input size array: ");
+int n = Convert.ToInt32(Console.ReadLine());
+string[] myArray = CreateArray(n);
 ShowArray(myArray);
-string[] myNewArray = CreateNewArrayFromElements(myArray);
-ShowArray(myNewArray);
+Console.WriteLine();
+
+if (NumberOfValues(myArray) == 0)
+{
+    Console.WriteLine("There are no elements in the array with a length less than or equal to three");
+}
+else
+{
+    ShowArray(MinimumThreeCharacters(myArray, NumberOfValues(myArray)));
+}
